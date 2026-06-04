@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-roman: "Playfair Display", serif;
+  --font-serif: "Playfair Display", serif;
+
+  --color-gold-400: #eab308;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #ca8a04;
+}
+
+@layer base {
+  body {
+    @apply antialiased min-h-screen font-sans;
+    @apply bg-gradient-to-br from-stone-100 via-neutral-50 to-orange-50/30 text-stone-800;
+  }
+  .dark body {
+    @apply bg-gradient-to-br from-zinc-950 via-stone-900 to-neutral-950 text-stone-200;
+  }
+}
+
+.glass {
+  @apply bg-black/[0.02] backdrop-blur-md border border-amber-600/20 shadow-[0_8px_32px_0_rgba(215,180,120,0.15)] transition-all duration-500 ease-out;
+}
+.glass:hover {
+  @apply -translate-y-1 scale-[1.02] shadow-[0_20px_40px_rgba(245,158,11,0.15)];
+}
+.dark .glass {
+  @apply bg-white/[0.03] backdrop-blur-md border border-white/[0.08] shadow-[inset_0_1px_1px_rgba(245,158,11,0.1),0_8px_32px_0_rgba(0,0,0,0.7)] transition-all duration-500 ease-out;
+}
+.dark .glass:hover {
+  @apply -translate-y-1 scale-[1.02] shadow-[0_20px_40px_rgba(245,158,11,0.15)];
+}
+
+
+/* 3D Flip Card CSS */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
