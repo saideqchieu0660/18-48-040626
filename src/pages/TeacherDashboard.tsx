@@ -22,6 +22,11 @@ export default function TeacherDashboard() {
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const [lessonPlanData, setLessonPlanData] = useState<any>(null);
   const [lessonError, setLessonError] = useState<string | null>(null);
+  
+  // Customization & Anti-Duplication States
+  const [planTitle, setPlanTitle] = useState("");
+  const [planSubject, setPlanSubject] = useState("");
+  const [isSavingPlan, setIsSavingPlan] = useState(false);
 
   const handleGenerateLessonPlan = async () => {
     if (!lessonTopic.trim()) return;
@@ -43,6 +48,10 @@ export default function TeacherDashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Gặp lỗi khi tạo giáo án");
       setLessonPlanData(JSON.parse(data.result));
+      
+      // Khởi tạo giá trị mặc định cho UI tùy chỉnh
+      setPlanTitle(`Giáo án: ${lessonTopic}`);
+      setPlanSubject(lessonTopic);
     } catch (err: any) {
       console.error(err);
       setLessonError(err.message);
@@ -52,21 +61,24 @@ export default function TeacherDashboard() {
   };
 
   const handleSaveLessonPlanAsDeck = async () => {
-    if (!lessonPlanData) return;
+    if (!lessonPlanData || isSavingPlan) return;
+    setIsSavingPlan(true); // Ngăn chặn nháy đúp (duplicate)
+    
     try {
       const { db } = await import("../lib/firebase");
       const { doc, setDoc } = await import("firebase/firestore");
+      const { v4: uuidv4 } = await import("uuid");
       
-      const newDeckId = `deck_${Date.now()}`;
+      const newDeckId = `deck_${uuidv4()}`;
       const newDeckObj = {
         id: newDeckId,
-        title: `Giáo án: ${lessonTopic}`,
-        subject: lessonTopic,
-        cards: lessonPlanData.flashcards?.map((c: any, i: number) => ({
-          id: `card_${Date.now()}_${i}`,
+        title: planTitle.trim() || `Giáo án: ${lessonTopic}`,
+        subject: planSubject.trim() || lessonTopic,
+        cards: lessonPlanData.flashcards?.map((c: any) => ({
+          id: `card_${uuidv4()}`,
           front: c.front,
           back: c.back,
-          subject: lessonTopic,
+          subject: planSubject.trim() || lessonTopic,
           mastery: 0,
           nextReview: Date.now(),
           isHard: false
@@ -79,9 +91,13 @@ export default function TeacherDashboard() {
       alert("Đã lưu giáo án thành bộ thẻ thành công!");
       setLessonPlanData(null);
       setLessonTopic("");
+      setPlanTitle("");
+      setPlanSubject("");
     } catch (err) {
       console.error(err);
       alert("Lỗi khi lưu bộ thẻ!");
+    } finally {
+      setIsSavingPlan(false);
     }
   };
 
@@ -275,11 +291,41 @@ export default function TeacherDashboard() {
                 <div>
                   <h4 className="font-bold text-violet-700 dark:text-violet-400 mb-2 border-b border-violet-500/20 pb-1">3. Thẻ bộ nhớ (Flashcards)</h4>
                   <p className="text-xs opacity-70 mb-3">Có {lessonPlanData.flashcards?.length} thẻ được tạo.</p>
+                  
+                  <div className="space-y-3 mb-4 bg-stone-200/50 dark:bg-zinc-800/50 p-4 rounded-xl border border-stone-300/40 dark:border-zinc-700/50">
+                    <div>
+                      <label className="text-xs font-bold uppercase opacity-70 mb-1 block">Tên Học Phần</label>
+                      <input 
+                        type="text" 
+                        value={planTitle} 
+                        onChange={(e) => setPlanTitle(e.target.value)} 
+                        className="w-full bg-white dark:bg-zinc-950 border border-stone-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                        placeholder="VD: Giáo án: Thế chiến thứ 2"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase opacity-70 mb-1 block">Phân loại / Danh mục</label>
+                      <input 
+                        type="text" 
+                        value={planSubject} 
+                        onChange={(e) => setPlanSubject(e.target.value)} 
+                        className="w-full bg-white dark:bg-zinc-950 border border-stone-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                        placeholder="VD: Lịch sử"
+                      />
+                    </div>
+                  </div>
+
                   <button 
                     onClick={handleSaveLessonPlanAsDeck}
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 rounded-xl transition shadow shadow-yellow-500/20"
+                    disabled={isSavingPlan}
+                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 rounded-xl transition shadow shadow-yellow-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
                   >
-                    Lưu toàn bộ thành Bộ thẻ (Deck)
+                    {isSavingPlan ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin"></div>
+                        Đang lưu...
+                      </>
+                    ) : "Lưu toàn bộ thành Bộ thẻ (Deck)"}
                   </button>
                 </div>
               </div>
