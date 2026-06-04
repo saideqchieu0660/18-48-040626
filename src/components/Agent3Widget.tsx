@@ -196,7 +196,7 @@ export default function Agent3Widget() {
       )}
 
       {isOpen && (
-        <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[550px] z-50 flex flex-col bg-stone-950/98 dark:bg-zinc-950/98 sm:bg-transparent sm:dark:bg-transparent backdrop-blur-md sm:backdrop-blur-none sm:glass rounded-none sm:rounded-2xl overflow-hidden shadow-2xl sm:border sm:border-amber-600/20 dark:sm:border-white/[0.08] animate-in slide-in-from-bottom-6">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[550px] z-50 flex flex-col bg-white/95 dark:bg-zinc-950/98 sm:bg-transparent sm:dark:bg-transparent backdrop-blur-md sm:backdrop-blur-none sm:glass rounded-none sm:rounded-2xl overflow-hidden shadow-2xl sm:border sm:border-stone-200/50 dark:sm:border-white/[0.08] animate-in slide-in-from-bottom-6">
           <div className="bg-yellow-500 text-black p-4 flex justify-between items-center shrink-0">
              <div className="flex items-center gap-2">
                <Bot className="w-5 h-5 animate-pulse" />
@@ -205,13 +205,13 @@ export default function Agent3Widget() {
              <button onClick={() => setIsOpen(false)} className="hover:bg-black/10 p-1.5 rounded-full transition cursor-pointer"><X className="w-5 h-5" /></button>
           </div>
           
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-stone-900/40 dark:bg-zinc-950/40 sm:bg-transparent sm:dark:bg-transparent">
-             <div className="bg-black/40 dark:bg-white/10 p-3 rounded-xl rounded-tl-none w-fit max-w-[85%] text-sm text-stone-200 dark:text-stone-200">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-stone-50/90 dark:bg-zinc-950/40 sm:bg-transparent sm:dark:bg-transparent">
+             <div className="bg-stone-200/50 dark:bg-white/10 p-3 rounded-xl rounded-tl-none w-fit max-w-[85%] text-sm text-stone-800 dark:text-stone-200">
                  Chào bạn. Mình là Gia sư Socratic. Gõ `/quiz easy`, `/quiz medium`, hoặc `/quiz hard` để mình xếp bài test những phần bạn yếu nhé.
              </div>
              
              {messages.map((m, i) => (
-                <div key={i} className={cn("text-sm p-3 rounded-xl max-w-[85%] break-words", m.role === "user" ? "bg-yellow-500/20 ml-auto rounded-tr-none text-stone-100 dark:text-stone-100" : "bg-black/40 dark:bg-white/10 rounded-tl-none text-stone-200 dark:text-stone-200")}>
+                <div key={i} className={cn("text-sm p-3 rounded-xl max-w-[85%] break-words", m.role === "user" ? "bg-yellow-500/30 dark:bg-yellow-500/20 ml-auto rounded-tr-none text-stone-900 dark:text-stone-100" : "bg-stone-200/50 dark:bg-white/10 rounded-tl-none text-stone-800 dark:text-stone-200")}>
                    <ReactMarkdown>{m.text}</ReactMarkdown>
                 </div>
              ))}
@@ -219,7 +219,7 @@ export default function Agent3Widget() {
              {quizData && <QuizRenderer />}
              
              {isLoading && (
-                <div className="bg-black/40 dark:bg-white/10 p-3 rounded-xl rounded-tl-none w-fit">
+                <div className="bg-stone-200/50 dark:bg-white/10 p-3 rounded-xl rounded-tl-none w-fit">
                    <div className="flex gap-1">
                       <div className="w-2 h-2 bg-yellow-500 rounded-full animate-bounce"></div>
                       <div className="w-2 h-2 bg-yellow-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
@@ -230,7 +230,7 @@ export default function Agent3Widget() {
              <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-4 sm:p-3 border-t border-black/20 dark:border-white/10 bg-black/60 dark:bg-zinc-900/60 sm:bg-black/5 sm:dark:bg-white/5 sticky bottom-0 pb-8 sm:pb-3 shrink-0">
+          <div className="p-4 sm:p-3 border-t border-stone-200/50 dark:border-white/10 bg-stone-100/90 dark:bg-zinc-900/60 sm:bg-stone-50/50 sm:dark:bg-white/5 sticky bottom-0 pb-8 sm:pb-3 shrink-0">
             <div className="flex gap-2">
               <input 
                 value={input}
@@ -239,7 +239,7 @@ export default function Agent3Widget() {
                 disabled={cooldownRemaining > 0}
                 placeholder={cooldownRemaining > 0 ? `Chờ ${cooldownRemaining}s để sạc năng lượng AI...` : "Ask Socrates... (/quiz, /quiz easy, /quiz hard)"}
                 className={cn(
-                  "flex-1 bg-transparent border-none focus:outline-none text-sm px-2 text-white dark:text-white placeholder:text-stone-400",
+                  "flex-1 bg-transparent border-none focus:outline-none text-sm px-2 text-stone-900 dark:text-stone-100 placeholder:text-stone-500 dark:placeholder:text-stone-400",
                   cooldownRemaining > 0 && "opacity-50 cursor-not-allowed"
                 )}
               />

@@ -65,7 +65,7 @@ export default function SetupProfileScreen() {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 rounded-lg"
+              className="w-full px-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 rounded-lg text-stone-900 dark:text-stone-100"
               placeholder="Tên của bạn"
             />
           </div>
@@ -76,7 +76,7 @@ export default function SetupProfileScreen() {
                     type={showAdminKey ? "text" : "password"}
                     value={adminKey}
                     onChange={(e) => setAdminKey(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 rounded-lg pr-10"
+                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 rounded-lg pr-10 text-stone-900 dark:text-stone-100"
                     placeholder="Mã phân quyền"
                 />
                 <button

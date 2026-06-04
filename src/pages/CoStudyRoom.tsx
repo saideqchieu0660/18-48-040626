@@ -131,7 +131,7 @@ export default function CoStudyRoom() {
                     value={task} 
                     onChange={(e) => setTask(e.target.value)}
                     placeholder="Mục tiêu tập trung..."
-                    className="bg-transparent border-none focus:ring-0 w-full font-bold"
+                    className="bg-transparent border-none focus:ring-0 w-full font-bold text-stone-900 dark:text-stone-100 placeholder:text-stone-500"
                  />
               </div>
            </div>

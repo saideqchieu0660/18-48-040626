@@ -246,7 +246,7 @@ export default function AuthScreen() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   disabled={isLoading}
-                  className="w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                  className="w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-stone-900 dark:text-stone-100 transition-all placeholder:text-stone-400"
                   placeholder="Tên hoặc biệt danh của bạn"
                 />
               </div>
@@ -265,7 +265,7 @@ export default function AuthScreen() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
-                className="w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                className="w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-stone-900 dark:text-stone-100 transition-all placeholder:text-stone-400"
                 placeholder="you@example.com"
               />
             </div>
@@ -283,7 +283,7 @@ export default function AuthScreen() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className="w-full pl-10 pr-10 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                className="w-full pl-10 pr-10 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-stone-900 dark:text-stone-100 transition-all placeholder:text-stone-400"
                 placeholder="••••••••"
               />
               <button
@@ -307,7 +307,7 @@ export default function AuthScreen() {
                 value={adminKey}
                 onChange={(e) => setAdminKey(e.target.value)}
                 disabled={isLoading}
-                className="w-full pl-10 pr-10 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                className="w-full pl-10 pr-10 py-3 bg-white/50 dark:bg-black/30 border border-amber-500/30 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-stone-900 dark:text-stone-100 transition-all placeholder:text-stone-400"
                 placeholder="Mã phân quyền Teacher"
               />
               <button

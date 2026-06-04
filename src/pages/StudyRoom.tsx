@@ -1079,14 +1079,14 @@ export default function StudyRoom() {
               ) : (
                 <div className="w-full space-y-4" onClick={e => e.stopPropagation()}>
                   <textarea 
-                    className="w-full p-4 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-center" 
+                    className="w-full p-4 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-stone-900 dark:text-stone-100 text-center" 
                     value={editFront} 
                     onChange={e => setEditFront(e.target.value)} 
                     placeholder="Mặt trước..." 
                     rows={2} 
                   />
                   <textarea 
-                    className="w-full p-4 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-sm text-center" 
+                    className="w-full p-4 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-stone-900 dark:text-stone-100 text-sm text-center" 
                     value={editBack} 
                     onChange={e => setEditBack(e.target.value)} 
                     placeholder="Mặt sau..." 
@@ -1110,14 +1110,14 @@ export default function StudyRoom() {
             ) : (
               <div className="w-full space-y-4 bg-white dark:bg-black/90 p-4 rounded-2xl shadow-2xl" onClick={e => e.stopPropagation()}>
                 <textarea 
-                  className="w-full p-3 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-base" 
+                  className="w-full p-3 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-stone-900 dark:text-stone-100 text-base" 
                   value={editFront} 
                   onChange={e => setEditFront(e.target.value)} 
                   placeholder="Mặt trước..." 
                   rows={2} 
                 />
                 <textarea 
-                  className="w-full p-3 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-sm" 
+                  className="w-full p-3 rounded-xl bg-stone-200/60 dark:bg-zinc-800/50 border border-amber-600/20 dark:border-amber-500/30 resize-none outline-none focus:ring-2 focus:ring-blue-500 transition text-stone-900 dark:text-stone-100 text-sm" 
                   value={editBack} 
                   onChange={e => setEditBack(e.target.value)} 
                   placeholder="Mặt sau..." 

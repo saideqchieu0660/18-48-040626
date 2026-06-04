@@ -1361,7 +1361,7 @@ export default function StudentDashboard() {
                        min="1" max="1000"
                        value={dailyGoal}
                        onChange={handleDailyGoalChange}
-                       className="w-full bg-black/5 dark:bg-white/5 border border-amber-600/20 dark:border-amber-500/30 rounded-lg px-3 py-2 text-center font-bold focus:outline-none focus:border-blue-500 transition"
+                       className="w-full bg-black/5 dark:bg-white/5 border border-amber-600/20 dark:border-amber-500/30 rounded-lg px-3 py-2 text-stone-900 dark:text-stone-100 text-center font-bold focus:outline-none focus:border-blue-500 transition"
                     />
                  </div>
               </div>
@@ -1499,7 +1499,7 @@ export default function StudentDashboard() {
                       <label className="text-base font-bold opacity-80 block">Nhập ID nhóm của bạn:</label>
                       <div className="flex gap-2">
                         <input 
-                           className="flex-1 bg-stone-200/60 dark:bg-zinc-800/50 border-2 border-amber-600/20 dark:border-amber-500/30 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-blue-500 font-mono transition-colors"
+                           className="flex-1 bg-stone-200/60 dark:bg-zinc-800/50 border-2 border-amber-600/20 dark:border-amber-500/30 rounded-xl px-4 py-3 text-stone-900 dark:text-stone-100 text-lg focus:outline-none focus:border-blue-500 font-mono transition-colors"
                            placeholder="Ví dụ: A7B9F2" 
                            value={groupId}
                            onChange={e => setGroupId(e.target.value)}
@@ -1526,7 +1526,7 @@ export default function StudentDashboard() {
                       <label className="text-base font-bold opacity-80 block">Tên nhóm mới:</label>
                       <div className="flex gap-2">
                         <input 
-                           className="flex-1 bg-stone-200/60 dark:bg-zinc-800/50 border-2 border-amber-600/20 dark:border-amber-500/30 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-yellow-500 transition-colors"
+                           className="flex-1 bg-stone-200/60 dark:bg-zinc-800/50 border-2 border-amber-600/20 dark:border-amber-500/30 rounded-xl px-4 py-3 text-stone-900 dark:text-stone-100 text-lg focus:outline-none focus:border-yellow-500 transition-colors"
                            placeholder="Nhóm vượt vũ môn..." 
                            value={newGroupName}
                            onChange={e => setNewGroupName(e.target.value)}

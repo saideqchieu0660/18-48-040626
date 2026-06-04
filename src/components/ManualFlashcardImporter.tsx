@@ -98,7 +98,11 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
         cards: previewCards.map((c, i) => ({
           id: `card_${Date.now()}_${i}`,
           front: c.front,
-          back: c.back
+          back: c.back,
+          subject: deckSubject.trim() || "Tự chọn",
+          mastery: 0,
+          nextReview: Date.now(),
+          isHard: false
         }))
       };
 
@@ -203,7 +207,7 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
                 value={deckTitle}
                 onChange={(e) => setDeckTitle(e.target.value)}
                 placeholder="VD: IELTS Vocabulary Unit 1"
-                className="w-full bg-white dark:bg-zinc-950 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-white dark:bg-zinc-950 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl px-4 py-3 text-stone-900 dark:text-stone-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
             <div>
@@ -213,7 +217,7 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
                 value={deckSubject}
                 onChange={(e) => setDeckSubject(e.target.value)}
                 placeholder="VD: Vocabulary"
-                className="w-full bg-white dark:bg-zinc-950 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-white dark:bg-zinc-950 border border-stone-200/50 dark:border-zinc-800/80 rounded-xl px-4 py-3 text-stone-900 dark:text-stone-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -238,7 +242,7 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
                       type="text"
                       value={card.front}
                       onChange={(e) => handleUpdatePreviewCard(card.id, 'front', e.target.value)}
-                      className="w-full bg-white dark:bg-black border border-stone-200/50 dark:border-zinc-800/80 rounded-lg px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full bg-white dark:bg-black border border-stone-200/50 dark:border-zinc-800/80 rounded-lg px-3 py-2 text-stone-900 dark:text-stone-100 text-sm font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
                   </div>
                   <div>
@@ -246,7 +250,7 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
                     <textarea
                       value={card.back}
                       onChange={(e) => handleUpdatePreviewCard(card.id, 'back', e.target.value)}
-                      className="w-full h-16 resize-none bg-white dark:bg-black border border-stone-200/50 dark:border-zinc-800/80 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full h-16 resize-none bg-white dark:bg-black border border-stone-200/50 dark:border-zinc-800/80 rounded-lg px-3 py-2 text-stone-900 dark:text-stone-100 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
                   </div>
                 </div>
