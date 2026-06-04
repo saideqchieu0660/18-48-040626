@@ -239,6 +239,56 @@ BẮT BUỘC ĐỊNH DẠNG: Chỉ trả về ĐÚNG MỘT MẢNG JSON duy nhấ
     }
   });
 
+  // Agent 4: Convert Document to JSON (Streaming API)
+  app.post("/api/convert-document", aiCooldownMiddleware, async (req, res) => {
+    try {
+      const { fileData, mimeType } = req.body;
+      const ai = getGeminiClient();
+
+      if (!fileData) {
+        return res.status(400).json({ error: "Không tìm thấy dữ liệu file" });
+      }
+
+      const systemPrompt = `Bạn là chuyên gia được lập trình để chuyển hóa tài liệu giáo dục thành Flashcard JSON.
+Nhiệm vụ: Phân tích tài liệu được cung cấp và trích xuất các thông tin/kiến thức quan trọng nhất, tạo ra các flashcards bao gồm câu hỏi (front) và giải thích (back).
+BẮT BUỘC ĐỊNH DẠNG: Chỉ trả về mảng JSON duy nhất, KHÔNG chứa ký tự markdown (như \`\`\`json), KHÔNG lời chào hỏi.
+Cấu trúc mẫu: [{"front": "Khái niệm A", "back": "Định nghĩa A"}]`;
+
+      const parts: any[] = [];
+      parts.push({ text: systemPrompt });
+      
+      const base64Data = fileData.split(',').pop() || fileData;
+
+      parts.push({
+        inlineData: {
+          data: base64Data,
+          mimeType: mimeType || "application/pdf"
+        }
+      });
+
+      const responseStream = await ai.models.generateContentStream({
+        model: "gemini-2.5-flash",
+        contents: parts
+      });
+
+      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      res.setHeader('Transfer-Encoding', 'chunked');
+
+      for await (const chunk of responseStream) {
+        res.write(chunk.text);
+      }
+      res.end();
+
+    } catch (error: any) {
+      console.error("Agent 4 Convert Document Error:", error);
+      if (!res.headersSent) {
+        res.status(500).json({ error: true, message: error.message || "Lỗi xử lý file" });
+      } else {
+        res.end(`\n\n[ERROR: ${error.message}]`);
+      }
+    }
+  });
+
   // AI Quick Lesson Plan Generator (Tạo Giáo Án Nhanh)
   app.post("/api/agent/lesson-plan", aiCooldownMiddleware, async (req, res) => {
     try {

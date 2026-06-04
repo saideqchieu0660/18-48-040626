@@ -6,6 +6,7 @@ import { cn } from "../lib/utils";
 import { safeRequest } from "../utils/apiClient";
 import ErrorNotification from "../components/ErrorNotification";
 import ManualFlashcardImporter from "../components/ManualFlashcardImporter";
+import DocumentConverter from "../components/DocumentConverter";
 
 export default function TeacherDashboard() {
   const user = store.getCurrentUser();
@@ -229,6 +230,7 @@ export default function TeacherDashboard() {
       </div>
 
       <ManualFlashcardImporter />
+      <DocumentConverter />
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Cột 1: Pipeline & Students */}
