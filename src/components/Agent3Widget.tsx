@@ -196,8 +196,13 @@ export default function Agent3Widget() {
       )}
 
       {isOpen && (
-        <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[550px] z-50 flex flex-col bg-white/95 dark:bg-zinc-950/98 sm:bg-transparent sm:dark:bg-transparent backdrop-blur-md sm:backdrop-blur-none sm:glass rounded-none sm:rounded-2xl overflow-hidden shadow-2xl sm:border sm:border-stone-200/50 dark:sm:border-white/[0.08] animate-in slide-in-from-bottom-6">
-          <div className="bg-yellow-500 text-black p-4 flex justify-between items-center shrink-0">
+        <>
+          <div 
+            className="fixed inset-0 bg-stone-900/40 dark:bg-black/40 backdrop-blur-md z-40 transition-all duration-[350ms] ease-out animate-in fade-in"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px] sm:h-[550px] z-50 flex flex-col bg-white/95 dark:bg-zinc-950/98 sm:bg-stone-50/90 sm:dark:bg-zinc-950/90 backdrop-blur-md sm:backdrop-blur-none sm:glass rounded-none sm:rounded-2xl overflow-hidden shadow-2xl sm:border sm:border-stone-200/50 dark:sm:border-white/[0.08] animate-in slide-in-from-bottom-6">
+            <div className="bg-yellow-500 text-black p-4 flex justify-between items-center shrink-0">
              <div className="flex items-center gap-2">
                <Bot className="w-5 h-5 animate-pulse" />
                <h3 className="font-bold tracking-tight text-stone-950">Agent 3 - Socratic Coach</h3>
@@ -258,6 +263,7 @@ export default function Agent3Widget() {
             </div>
           </div>
         </div>
+        </>
       )}
     </>
   );
