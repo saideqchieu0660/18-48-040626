@@ -27,9 +27,12 @@ export default function TeacherDashboard() {
   const [planTitle, setPlanTitle] = useState("");
   const [planSubject, setPlanSubject] = useState("");
   const [isSavingPlan, setIsSavingPlan] = useState(false);
+  const isSavingPlanRef = useRef(false);
+  const isGeneratingPlanRef = useRef(false);
 
   const handleGenerateLessonPlan = async () => {
-    if (!lessonTopic.trim()) return;
+    if (!lessonTopic.trim() || isGeneratingPlanRef.current) return;
+    isGeneratingPlanRef.current = true;
     setIsGeneratingPlan(true);
     setLessonError(null);
     setLessonPlanData(null);
@@ -56,17 +59,17 @@ export default function TeacherDashboard() {
       console.error(err);
       setLessonError(err.message);
     } finally {
+      isGeneratingPlanRef.current = false;
       setIsGeneratingPlan(false);
     }
   };
 
   const handleSaveLessonPlanAsDeck = async () => {
-    if (!lessonPlanData || isSavingPlan) return;
+    if (!lessonPlanData || isSavingPlanRef.current) return;
+    isSavingPlanRef.current = true;
     setIsSavingPlan(true); // Ngăn chặn nháy đúp (duplicate)
     
     try {
-      const { db } = await import("../lib/firebase");
-      const { doc, setDoc } = await import("firebase/firestore");
       const { v4: uuidv4 } = await import("uuid");
       
       const newDeckId = `deck_${uuidv4()}`;
@@ -85,8 +88,8 @@ export default function TeacherDashboard() {
         })) || []
       };
 
-      await setDoc(doc(db, "sets", newDeckId), newDeckObj);
-      store.addDeck(newDeckObj);
+      // store.addDeck covers both pushing locally and saving to Firebase
+      await store.addDeck(newDeckObj);
       
       alert("Đã lưu giáo án thành bộ thẻ thành công!");
       setLessonPlanData(null);
@@ -97,6 +100,7 @@ export default function TeacherDashboard() {
       console.error(err);
       alert("Lỗi khi lưu bộ thẻ!");
     } finally {
+      isSavingPlanRef.current = false;
       setIsSavingPlan(false);
     }
   };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Copy, ExternalLink, Database, Check, Sparkles, X, Edit3, Trash2, ChevronRight } from "lucide-react";
 import { cn } from "../lib/utils.js";
 import { db, auth } from "../lib/firebase.js";
@@ -75,8 +75,11 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
     setPreviewCards(previewCards.filter(c => c.id !== id));
   };
 
+  const isProcessingRef = useRef(false);
+
   const handleImportToFirestore = async () => {
-    if (!previewCards || previewCards.length === 0) return;
+    if (!previewCards || previewCards.length === 0 || isProcessingRef.current) return;
+    isProcessingRef.current = true;
     setIsProcessing(true);
     setError(null);
     setSuccessCount(null);
@@ -86,17 +89,19 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
     if (!currentUser) {
       setError("Bạn chưa đăng nhập hoặc phiên đã hết hạn!");
       setIsProcessing(false);
+      isProcessingRef.current = false;
       return;
     }
 
     try {
-      const deckId = `deck_${Date.now()}`;
+      const { v4: uuidv4 } = await import("uuid");
+      const deckId = `deck_${uuidv4()}`;
       const newDeckObj: Deck = {
         id: deckId,
         title: deckTitle.trim() || "Bộ thẻ nhập tay",
         subject: deckSubject.trim() || "Tự chọn",
-        cards: previewCards.map((c, i) => ({
-          id: `card_${Date.now()}_${i}`,
+        cards: previewCards.map((c) => ({
+          id: `card_${uuidv4()}`,
           front: c.front,
           back: c.back,
           subject: deckSubject.trim() || "Tự chọn",
@@ -122,6 +127,7 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
       setError(`Lỗi Import Firestore: ${err.message || "Không thể lưu dữ liệu"}`);
     } finally {
       setIsProcessing(false);
+      isProcessingRef.current = false;
       setProgress(null);
     }
   };
