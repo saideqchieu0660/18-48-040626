@@ -87,7 +87,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col font-sans transition-colors duration-300">
-      <header className="bg-black/[0.02] dark:bg-white/[0.03] border-b border-black/[0.05] dark:border-white/[0.08] dark:border-amber-500/30 border-amber-600/20 backdrop-blur-md shadow-[0_8px_32px_0_rgba(215,180,120,0.15)] dark:shadow-[inset_0_1px_1px_rgba(245,158,11,0.1),0_8px_32px_0_rgba(0,0,0,0.7)] text-stone-800 dark:text-stone-200 transition-all duration-500 ease-out fixed top-0 w-full z-50 px-4 md:px-6 py-4 flex items-center justify-between">
+      <header className="bg-white/70 dark:bg-black/30 backdrop-blur-md border-b border-white/50 dark:border-white/10 shadow-sm fixed top-0 w-full z-40 px-4 md:px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <MarcusAureliusIcon className="w-6 h-6 text-yellow-500" />
           <span className="italic font-serif tracking-widest uppercase font-light text-xl md:text-2xl text-yellow-500">HENOSIS</span>

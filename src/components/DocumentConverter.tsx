@@ -195,8 +195,8 @@ export default function DocumentConverter() {
   };
 
   return (
-    <section className="bg-stone-50 dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 relative overflow-hidden">
-      <div className="absolute top-0 right-0 bg-blue-500 text-white text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-bl-xl">
+    <section className="card-3d rounded-3xl p-6 md:p-8 relative overflow-hidden">
+      <div className="absolute top-0 right-0 bg-blue-500 text-white text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-bl-xl shadow-md">
         Option Tự động (Edge AI)
       </div>
       
@@ -265,7 +265,7 @@ export default function DocumentConverter() {
                   value={deckTitle} 
                   onChange={(e) => setDeckTitle(e.target.value)} 
                   disabled={isProcessing}
-                  className="w-full bg-white dark:bg-zinc-950 border border-stone-200 dark:border-zinc-800 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                  className="w-full input-3d px-3 py-2.5 text-sm disabled:opacity-50"
                   placeholder="Để trống AI sẽ tự đặt tên theo file"
                />
             </div>
@@ -276,7 +276,7 @@ export default function DocumentConverter() {
                   value={deckSubject} 
                   onChange={(e) => setDeckSubject(e.target.value)} 
                   disabled={isProcessing}
-                  className="w-full bg-white dark:bg-zinc-950 border border-stone-200 dark:border-zinc-800 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 disabled:opacity-50"
+                  className="w-full input-3d px-3 py-2.5 text-sm disabled:opacity-50"
                   placeholder="VD: Lịch sử, Toeic..."
                />
             </div>
@@ -284,7 +284,7 @@ export default function DocumentConverter() {
             <button 
                onClick={handleConvert}
                disabled={!file || isProcessing}
-               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow shadow-blue-500/20 disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
+               className="w-full btn-3d btn-3d-primary py-3 flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
             >
                {isProcessing ? (
                   <>

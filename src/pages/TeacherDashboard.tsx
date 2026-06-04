@@ -305,7 +305,7 @@ export default function TeacherDashboard() {
                         type="text" 
                         value={planTitle} 
                         onChange={(e) => setPlanTitle(e.target.value)} 
-                        className="w-full bg-white dark:bg-zinc-950 border border-stone-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                        className="w-full input-3d px-3 py-2 text-sm text-stone-900 dark:text-stone-100"
                         placeholder="VD: Giáo án: Thế chiến thứ 2"
                       />
                     </div>
@@ -315,7 +315,7 @@ export default function TeacherDashboard() {
                         type="text" 
                         value={planSubject} 
                         onChange={(e) => setPlanSubject(e.target.value)} 
-                        className="w-full bg-white dark:bg-zinc-950 border border-stone-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                        className="w-full input-3d px-3 py-2 text-sm text-stone-900 dark:text-stone-100"
                         placeholder="VD: Lịch sử"
                       />
                     </div>
@@ -324,7 +324,7 @@ export default function TeacherDashboard() {
                   <button 
                     onClick={handleSaveLessonPlanAsDeck}
                     disabled={isSavingPlan}
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 rounded-xl transition shadow shadow-yellow-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full btn-3d bg-yellow-500 text-black py-3 rounded-xl disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {isSavingPlan ? (
                       <>
@@ -427,8 +427,8 @@ export default function TeacherDashboard() {
       </div>
 
       {showConfirmDelete && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 p-6 rounded-2xl max-w-sm w-full shadow-2xl animate-in fade-in-50 zoom-in-95 duration-200">
+        <div className="modal-glass-overlay flex items-center justify-center p-4">
+          <div className="modal-glass-content p-6 max-w-sm w-full">
             <h4 className="text-lg font-bold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
               <AlertCircle className="w-5 h-5" /> Xác nhận xóa bộ học tập?
             </h4>
@@ -470,8 +470,8 @@ export default function TeacherDashboard() {
       )}
 
       {studentToDelete && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 p-6 rounded-2xl max-w-md w-full shadow-2xl animate-in fade-in-50 zoom-in-95 duration-200">
+        <div className="modal-glass-overlay flex items-center justify-center p-4">
+          <div className="modal-glass-content p-6 max-w-md w-full">
             <h4 className="text-lg font-bold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
               <AlertTriangle className="w-5 h-5" /> Xác nhận xóa học sinh "{studentToDelete.name}"?
             </h4>

@@ -290,8 +290,8 @@ Bắt buộc phải trả về dữ liệu dưới dạng MẢNG JSON NGHIÊM NG
 
       {/* TOOL MODAL */}
       {showToolModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-zinc-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-stone-200 dark:border-zinc-800 animate-in zoom-in-95 duration-200">
+        <div className="modal-glass-overlay flex items-center justify-center p-4">
+          <div className="modal-glass-content w-full max-w-2xl">
             <div className="px-6 py-4 flex justify-between items-center border-b border-stone-200/50 dark:border-zinc-800/50">
               <h3 className="font-display font-semibold text-lg flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-indigo-500" /> Chọn Trợ Lý AI

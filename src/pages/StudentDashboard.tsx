@@ -74,7 +74,7 @@ const MOTIVATION_QUOTES = [
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl border border-neutral-200/50 dark:border-neutral-800/50 p-4 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+      <div className="card-3d p-4 rounded-2xl">
         <p className="font-medium text-xs tracking-widest uppercase text-zinc-500 dark:text-zinc-400 mb-1.5">{label}</p>
         <div className="flex items-baseline gap-1.5">
           <p className="font-display font-bold text-2xl text-yellow-600 dark:text-yellow-500 leading-none">
@@ -1644,7 +1644,7 @@ export default function StudentDashboard() {
             
             <div className="space-y-6">
               {/* Tùy Chọn Tắt m Toàn Cục */}
-              <div className="bg-white/50 dark:bg-zinc-900/50 p-6 rounded-xl border border-amber-600/20 dark:border-amber-500/30 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+              <div className="card-3d p-6 rounded-xl flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                  <div className="space-y-2 max-w-lg">
                     <h4 className="text-xl font-bold flex items-center gap-2">
                        {muteAll ? <VolumeX className="w-5 h-5 text-red-500" /> : <Volume2 className="w-5 h-5 text-yellow-500 animate-pulse" />}
@@ -1670,7 +1670,7 @@ export default function StudentDashboard() {
                  </button>
               </div>
 
-              <div className="bg-white/50 dark:bg-zinc-900/50 p-6 rounded-xl border border-amber-600/20 dark:border-amber-500/30 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+              <div className="card-3d p-6 rounded-xl flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                  <div className="space-y-2 max-w-lg">
                     <h4 className="text-xl font-bold flex items-center gap-2"><Trash2 className="w-5 h-5 text-red-500" /> Xóa Dữ Liệu Cũ</h4>
                     <p className="opacity-70 text-sm">
@@ -1694,7 +1694,7 @@ export default function StudentDashboard() {
                    initial={{ opacity: 0 }}
                    animate={{ opacity: 1 }}
                    exit={{ opacity: 0 }}
-                   className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+                   className="modal-glass-overlay flex items-center justify-center p-4"
                 >
                    <motion.div 
                       initial={{ scale: 0.95, opacity: 0 }}
@@ -1759,7 +1759,7 @@ export default function StudentDashboard() {
              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                {/* BAN TRÁI: BẢN ĐỒ HOẠT ĐỘNG / CALENDAR VIEW */}
                <div className="lg:col-span-5 space-y-6">
-                 <div className="bg-white/40 dark:bg-zinc-900/40 p-5 rounded-2xl border border-amber-600/15 dark:border-amber-500/25 shadow-md">
+                 <div className="card-3d p-5 rounded-2xl">
                    <div className="flex justify-between items-center mb-4">
                      <button onClick={navigatePrevMonth} className="p-2 border border-amber-500/20 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition text-xs font-bold shrink-0 cursor-pointer">
                        Trước
@@ -1850,7 +1850,7 @@ export default function StudentDashboard() {
                            key={record.id}
                            initial={{ opacity: 0, x: -20 }}
                            animate={{ opacity: 1, x: 0 }}
-                           className="bg-white/50 dark:bg-zinc-900/50 p-4 rounded-xl border border-amber-600/20 dark:border-amber-500/30 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center shadow-sm"
+                           className="card-3d p-4 rounded-xl flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center"
                          >
                            <div className="space-y-1">
                              <div className="flex items-center gap-2">
@@ -1892,7 +1892,7 @@ export default function StudentDashboard() {
           initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
           animate={{ opacity: 1, backdropFilter: "blur(4px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-          className="fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4 md:p-8"
+          className="modal-glass-overlay flex items-center justify-center p-4 md:p-8 z-[100]"
         >
           <motion.div 
             initial={{ scale: 0.95, y: 20, opacity: 0 }}
@@ -1964,8 +1964,8 @@ export default function StudentDashboard() {
       )}
 
       {studentToDelete && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-900 border border-stone-200 dark:border-zinc-800 p-6 rounded-2xl max-w-md w-full shadow-2xl animate-in fade-in-50 zoom-in-95 duration-200">
+        <div className="modal-glass-overlay flex items-center justify-center p-4">
+          <div className="modal-glass-content p-6 max-w-md w-full">
             <h4 className="text-lg font-bold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
               <AlertTriangle className="w-5 h-5" /> Xác nhận xóa học sinh "{studentToDelete.name}"?
             </h4>
