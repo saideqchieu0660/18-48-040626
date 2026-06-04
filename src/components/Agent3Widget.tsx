@@ -6,6 +6,7 @@ import { safeRequest } from "../utils/apiClient";
 import ReactMarkdown from "react-markdown";
 import { useAICooldown } from "../lib/cooldown";
 import { auth } from "../lib/firebase";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Agent3Widget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function Agent3Widget() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [quizData, setQuizData] = useState<any>(null); // For MCQ
+  const [sessionId] = useState(() => uuidv4());
 
   const user = store.getCurrentUser();
   const { cooldownRemaining, startCooldown } = useAICooldown(user);
@@ -65,7 +67,7 @@ export default function Agent3Widget() {
             "x-user-id": user?.id || "",
             "x-user-role": user?.role || ""
           },
-          body: JSON.stringify({ message: currentInput, context, mode: "quiz", mcqData: top15, difficulty })
+          body: JSON.stringify({ message: currentInput, context, mode: "quiz", mcqData: top15, difficulty, sessionId })
         });
 
         if (!res.ok) {
@@ -75,7 +77,7 @@ export default function Agent3Widget() {
             setIsLoading(false);
             return;
           }
-          throw new Error(errData.error || "API Agent 3 lỗi");
+          throw new Error(errData.message || (typeof errData.error === 'string' ? errData.error : "API Agent 3 lỗi"));
         }
 
         const data = await res.json();
@@ -91,7 +93,7 @@ export default function Agent3Widget() {
             "x-user-id": user?.id || "",
             "x-user-role": user?.role || ""
           },
-          body: JSON.stringify({ message: currentInput, context, mode: "chat" })
+          body: JSON.stringify({ message: currentInput, sessionId, mode: "chat" })
         });
 
         if (!res.ok) {
@@ -101,7 +103,7 @@ export default function Agent3Widget() {
             setIsLoading(false);
             return;
           }
-          throw new Error(errData.error || "API Agent 3 lỗi");
+          throw new Error(errData.message || (typeof errData.error === 'string' ? errData.error : "API Agent 3 lỗi"));
         }
 
         const data = await res.json();

@@ -9,6 +9,8 @@ dotenv.config();
 console.log("Environment configuration loaded.");
 
 // --- DEFENSIVE BOOT STRAPPING MECHANISM ---
+import admin from 'firebase-admin';
+
 function initializeGoogleServiceAccount() {
   try {
     const rawServiceAccount = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
@@ -23,9 +25,15 @@ function initializeGoogleServiceAccount() {
       .replace(/\\n/g, '\n')
       .trim();
 
-    JSON.parse(sanitizedServiceAccount);
+    const serviceAccountObj = JSON.parse(sanitizedServiceAccount);
     process.env.GOOGLE_SERVICE_ACCOUNT_KEY = sanitizedServiceAccount; // Inject sanitized payload back to ENV
     
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccountObj)
+      });
+    }
+
     console.log("🚀 [Service Account SDK] Initialized successfully with defensive regex parsing.");
   } catch (error: any) {
     console.error("🚨 [CRITICAL BACKEND CRASH] Service Account initialization failed on boot:", error.message);
@@ -275,7 +283,7 @@ KHÔNG sử dụng Markdown code block. TRẢ VỀ ĐÚNG MỘT OBJECT JSON DUY 
   // Agent 3: Socratic & Context-Aware Assistant
   app.post("/api/agent3/chat", aiCooldownMiddleware, async (req, res) => {
     try {
-      const { message, context, mode, mcqData, difficulty } = req.body;
+      const { message, context, mode, mcqData, difficulty, sessionId } = req.body;
       const ai = getGeminiClient();
       
       let systemPrompt = `Mày là Agent 3 - 'Socrates AI Coach', gia sư học tập chủ động. QUY TẮC BẮT BUỘC:
@@ -304,19 +312,59 @@ KHÔNG sử dụng Markdown code block. TRẢ VỀ ĐÚNG MỘT OBJECT JSON DUY 
       
       const fullPrompt = `Ngữ cảnh ẩn (Hidden Context): ${context}\n\nHọc sinh: ${message}`;
 
+      let previousHistory: any[] = [];
+      let dbRef: admin.firestore.DocumentReference | null = null;
+      
+      if (mode === "chat" && sessionId && admin.apps.length > 0) {
+        try {
+          const db = admin.firestore();
+          // Use 'chat_sessions' in Firestore
+          dbRef = db.collection("chat_sessions").doc(sessionId);
+          const doc = await dbRef.get();
+          if (doc.exists) {
+            const data = doc.data();
+            if (data && data.messages && Array.isArray(data.messages)) {
+              previousHistory = data.messages;
+            }
+          }
+        } catch(e) {
+          console.error("Firestore retrieval error:", e);
+          previousHistory = []; 
+        }
+      }
+
+      const contents = [
+          { role: "user", parts: [{ text: systemPrompt }] },
+          { role: "model", parts: [{ text: "Đã hiểu." }] },
+          ...previousHistory,
+          { role: "user", parts: [{ text: fullPrompt }] }
+      ];
+
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: [
-            { role: "user", parts: [{ text: systemPrompt }] },
-            { role: "model", parts: [{ text: "Đã hiểu." }] },
-            { role: "user", parts: [{ text: fullPrompt }] }
-        ]
+        contents: contents
       });
+
+      const responseText = response.text || "";
+
+      if (mode === "chat" && dbRef) {
+        try {
+          await dbRef.set({
+            messages: admin.firestore.FieldValue.arrayUnion(
+              { role: "user", parts: [{ text: fullPrompt }] },
+              { role: "model", parts: [{ text: responseText }] }
+            ),
+            updatedAt: admin.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        } catch(e) {
+          console.error("Firestore arrayUnion error:", e);
+        }
+      }
       
-      res.json({ result: response.text });
-    } catch (error) {
+      res.json({ result: responseText });
+    } catch (error: any) {
       console.error("Agent 3 Error:", error);
-      res.status(500).json({ error: true, message: "Failed to generate context" });
+      res.status(500).json({ error: error.message || "Failed to generate context" });
     }
   });
 
